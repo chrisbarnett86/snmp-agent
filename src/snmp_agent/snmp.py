@@ -213,6 +213,9 @@ class SnmpGetContext(SnmpContext):
     def __init__(self):
         self.tag = ASN1.GET_REQUEST
 
+class SnmpSetContext(SnmpContext):
+    def __init__(self):
+        self.tag = ASN1.SET_REQUEST
 
 class SnmpGetNextContext(SnmpContext):
     def __init__(self):
@@ -324,6 +327,8 @@ def decode_request(data: bytes) -> SNMPRequest:
     elif ASN1.GET_NEXT_REQUEST.code == _pdu_type_code:
         context = SnmpGetNextContext()
     elif ASN1.GET_BULK_REQUEST.code == _pdu_type_code:
+        context = SnmpGetBulkContext()
+    elif ASN1.SET_REQUEST.code == _pdu_type_code:
         context = SnmpGetBulkContext()
     else:
         raise NotImplementedError(f"PDU-TYPE code '{_pdu_type_code}' is not implemented")
