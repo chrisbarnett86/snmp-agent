@@ -15,12 +15,12 @@ def handle_request(req: snmp.SNMPRequest,
                            max_repetitions=req.max_repetitions,
                            vbs=vbs)
     elif isinstance(req.context, snmp.SnmpSetContext):
-        results = set(req_vbs=req.variable_bindings, vbs=vbs)
+        results = set_snmp(req_vbs=req.variable_bindings, vbs=vbs)
     else:
         raise NotImplementedError
     return results
 
-def set(req_vbs: List[snmp.VariableBinding], 
+def set_snmp(req_vbs: List[snmp.VariableBinding], 
                 vbs: List[snmp.VariableBinding]) -> List[snmp.VariableBinding]:
     results = []
     for req_vb in req_vbs:
@@ -29,6 +29,10 @@ def set(req_vbs: List[snmp.VariableBinding],
                 vb.value = req_vb.value  # Update the value
                 results.append(vb)
                 break
+            elif isinstance(req_vb.value, str):
+                results.append(snmp.VariableBinding(oid=req_vb.oid, value=snmp.OctetString(req_vb.value)))
+            elif isinstance(req_vb.value, int):
+                results.append(snmp.VariableBinding(oid=req_vb.oid, value=snmp.OctetString(req_vb.Integer)))
         else:
             # If OID not found, append an error response or handle accordingly
             results.append(snmp.VariableBinding(oid=req_vb.oid, value=snmp.NoSuchObject()))

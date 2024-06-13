@@ -1,13 +1,13 @@
 [tool.poetry]
 name = "snmp-agent"
-version = "0.2.3"
+version = "0.2.4"
 description = "SNMP Server"
 authors = ["kthrdei <kthrd.tech@gmail.com>"]
 readme = "README.md"
 keywords = ['snmp', 'snmp-server', 'network']
 license = "MIT"
-repository = "https://github.com/kthrdei/snmp-agent"
-homepage = "https://github.com/kthrdei/snmp-agent"
+repository = "https://github.com/chrisbarnett86/snmp-agent"
+homepage = "https://github.com/chrisbarnett86/snmp-agent"
 
 [tool.poetry.dependencies]
 python = "^3.8"
